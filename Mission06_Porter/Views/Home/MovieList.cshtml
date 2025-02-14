@@ -1,0 +1,51 @@
+﻿@{
+    ViewData["Title"] = "Movies";
+}
+@model Movie
+
+<h1>Enter a Film</h1>
+
+<form method="post" asp-action="MovieList">
+    <label asp-for="Category">Movie Category:</label>
+    <input asp-for="Category" />
+    <span asp-validation-for="Category" style="color:red;"></span><br />
+
+    <label asp-for="Title">Title:</label>
+    <input asp-for="Title" />
+    <span asp-validation-for="Title" style="color:red;"></span><br />
+
+    <label asp-for="Year">Year:</label>
+    <input asp-for="Year" />
+    <span asp-validation-for="Year" style="color:red;"></span><br />
+
+    <label asp-for="Director">Director:</label>
+    <input asp-for="Director" />
+    <span asp-validation-for="Director" style="color:red;"></span><br />
+
+    <label asp-for="Rating">Rating:</label>
+    <select asp-for="Rating">
+        <option>G</option>
+        <option>PG</option>
+        <option>PG-13</option>
+        <option>R</option>
+    </select>
+    <span asp-validation-for="Rating" style="color:red;"></span><br />
+
+    <label asp-for="Edited">Did you watch the edited version?</label>
+    <select asp-for="Edited">
+        <option value="">---</option> <!--Add nullable option-->
+        <option value="false">No</option>
+        <option value="true">Yes</option>
+    </select><br />
+
+    <label asp-for="LentTo">Lent To:</label>
+    <input asp-for="LentTo" /><br />
+
+    <label asp-for="Notes">Notes:</label>
+    <input asp-for="Notes" /><br />
+
+    <br /><br />
+
+    <button type="submit">Submit Rating</button>
+</form>
+
