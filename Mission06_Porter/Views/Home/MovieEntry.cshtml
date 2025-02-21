@@ -1,0 +1,73 @@
+﻿@{
+    ViewData["Title"] = "New Movie Entry";
+}
+
+@model Movie
+
+<h1>Enter a Film</h1>
+
+<!-- display input boxes for user inputs -->
+<form method="post">
+    <input type="hidden" asp-for="MovieId" />
+
+    <label asp-for="Title">Title:</label>
+    <input asp-for="Title" />
+    <span asp-validation-for="Title" style="color:red;"></span><br />
+
+	<select asp-for="CategoryId">
+		<option value="">Select a Category</option>
+		@foreach (Category c in ViewBag.categories)
+		{
+			<option value="@c.CategoryID">@c.CategoryName</option>
+		}
+	</select><br />
+
+    <label asp-for="Year">Year:</label>
+    <input asp-for="Year" />
+    <span asp-validation-for="Year" style="color:red;"></span><br />
+
+    <label asp-for="Director">Director:</label>
+    <input asp-for="Director" />
+    <span asp-validation-for="Director" style="color:red;"></span><br />
+
+    <label asp-for="Rating">Rating:</label>
+    <select asp-for="Rating">
+        <option>G</option>
+        <option>PG</option>
+        <option>PG-13</option>
+        <option>R</option>
+        <option>TV-G</option>
+        <option>TV-PG</option>
+		<option>TV-14</option>
+        <option>TV-Y7</option>
+        <option>NR</option>
+        <option>UR</option>
+    </select>
+    <span asp-validation-for="Rating" style="color:red;"></span><br />
+
+	<label asp-for="CopiedToPlex">Is the movie copied to Plex?</label>
+	<select asp-for="CopiedToPlex">
+		<option value="false">No</option>
+		<option value="true">Yes</option>
+	</select>
+
+    <label asp-for="Edited">Did you watch the edited version?</label>
+    <select asp-for="Edited">
+        <option value="false">No</option>
+        <option value="true">Yes</option>
+    </select><br />
+
+    <label asp-for="LentTo">Lent To:</label>
+    <input asp-for="LentTo" /><br />
+
+
+    <span asp-validation-for="CopiedToPlex" style="color:red;"></span><br />
+
+    <label asp-for="Notes">Notes:</label>
+    <input asp-for="Notes" /><br />
+
+    <br />
+
+    <button type="submit">Submit</button>
+</form>
+

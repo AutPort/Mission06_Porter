@@ -1,51 +1,68 @@
 ﻿@{
     ViewData["Title"] = "Movies";
 }
-@model Movie
 
-<h1>Enter a Film</h1>
+@model List<Movie>
 
-<form method="post" asp-action="MovieList">
-    <label asp-for="Category">Movie Category:</label>
-    <input asp-for="Category" />
-    <span asp-validation-for="Category" style="color:red;"></span><br />
+<!-- create table for displaying database records and make it professional with bootstrap -->
+<div class="container mt-4">
+    <h1 class="mb-4 text-center">Joel Hilton's Movie Collection</h1>
 
-    <label asp-for="Title">Title:</label>
-    <input asp-for="Title" />
-    <span asp-validation-for="Title" style="color:red;"></span><br />
+	<!-- include 'movie added successfully' message if the just used the MovieEntry form -->
+	@if (TempData["SuccessMessage"] != null)
+	{
+		<div class="alert alert-success">
+			@TempData["SuccessMessage"]
+		</div>
+	}
 
-    <label asp-for="Year">Year:</label>
-    <input asp-for="Year" />
-    <span asp-validation-for="Year" style="color:red;"></span><br />
+    <!-- Table container for responsive design -->
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover text-center">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Title</th>
+                    <th>Year</th>
+                    <th>Director</th>
+                    <th>Category</th>
+                    <th>Rating</th>
+                    <th>Edited</th>
+                    <th>Copied to Plex</th>
+                    <th>Lent To</th>
+                    <th>Notes</th>
+                    <th>Actions</th> <!-- Column for edit and delete buttons -->
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var movie in Model)
+                {
+                    <tr class="align-middle align-left">
+                        <td class="text-left">@movie.Title</td>
+                        <td class="text-left">@movie.Year</td>
+                        <td class="text-left">@movie.Director</td>
+                        <td class="text-left">@movie.Category.CategoryName</td>
+                        <td class="text-left">@movie.Rating</td>
+                        <td class="text-left">@(movie.Edited ? "Yes" : "No")</td> <!-- Check if movie is edited -->
+                        <td class="text-left">@(movie.CopiedToPlex ? "Yes" : "No")</td> <!-- Check if copied to Plex -->
+                        <td class="text-left">@(string.IsNullOrEmpty(movie.LentTo) ? "N/A" : movie.LentTo)</td> <!-- Display LentTo or N/A -->
+                        <td class="text-left">@(string.IsNullOrEmpty(movie.Notes) ? "N/A" : movie.Notes)</td> <!-- Display Notes or N/A -->
+                        <td>
 
-    <label asp-for="Director">Director:</label>
-    <input asp-for="Director" />
-    <span asp-validation-for="Director" style="color:red;"></span><br />
 
-    <label asp-for="Rating">Rating:</label>
-    <select asp-for="Rating">
-        <option>G</option>
-        <option>PG</option>
-        <option>PG-13</option>
-        <option>R</option>
-    </select>
-    <span asp-validation-for="Rating" style="color:red;"></span><br />
-
-    <label asp-for="Edited">Did you watch the edited version?</label>
-    <select asp-for="Edited">
-        <option value="">---</option> <!--Add nullable option-->
-        <option value="false">No</option>
-        <option value="true">Yes</option>
-    </select><br />
-
-    <label asp-for="LentTo">Lent To:</label>
-    <input asp-for="LentTo" /><br />
-
-    <label asp-for="Notes">Notes:</label>
-    <input asp-for="Notes" /><br />
-
-    <br /><br />
-
-    <button type="submit">Submit Rating</button>
-</form>
-
+                            <div class="d-flex gap-2">
+								<!-- Edit button -->
+                                <a href="@Url.Action("Update", new { id = movie.MovieId })" class="btn btn-primary btn-sm">
+                                    <i class="fas fa-edit"></i> Edit
+                                </a>
+                                <!-- Delete button -->
+                                <a href="@Url.Action("Delete", new { id = movie.MovieId })" class="btn btn-danger btn-sm">
+                                    <i class="fas fa-trash-alt"></i> Delete
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
